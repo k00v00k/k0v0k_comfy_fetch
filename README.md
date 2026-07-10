@@ -162,7 +162,7 @@ k0v0k.comfy-fetch.job_update
 
 ## Error Handling
 
-The backend returns structured `error_details` objects with stable error codes. The UI maps those codes to user-facing English text through `js/i18n.js`.
+The backend returns structured `error_details` objects with stable error codes. The UI maps those codes to user-facing text through `js/i18n.js`.
 
 Common error codes include:
 
@@ -186,7 +186,24 @@ Common error codes include:
 - `retry_exhausted`
 - `canceled_by_user`
 
-English is the default locale. Additional locales should extend the same catalog keys rather than hardcoding text in the UI.
+## Localization
+
+All user-facing UI copy should live in `js/i18n.js`.
+
+The current catalog uses English as the default locale. The helper functions exported from that file provide:
+
+- `t(key, values, fallback)` for ordinary translated strings
+- `tPlural(key, count, values)` for count-aware strings
+- `localizeError(errorInfo)` for structured download and provider errors
+
+When adding or changing UI text:
+
+- add the string to the locale catalog in `js/i18n.js`
+- reference it from UI code by key
+- keep backend error codes stable and map their display text through `localizeError`
+- avoid hardcoding visible English text in `js/missing-input-resolver.js`
+
+Future locales should be added by extending the same catalog keys used by the English default. A locale should be considered incomplete if it does not provide the same top-level sections and error-code mappings as English.
 
 ## Restart Behavior
 
@@ -244,4 +261,4 @@ python -m py_compile install.py
 
 ## License
 
-Apache License 2.0. See `LICENSE`.
+Apache License 2.0. See [LICENSE](LICENSE).
