@@ -1,0 +1,29 @@
+{
+  "name": "@k0v0k/comfy-fetch-comfyui",
+  "version": "0.7.48",
+  "description": "K0V0K Comfy Fetch for ComfyUI, backed by the autoforge comfy-asset-fetch service.",
+  "type": "module",
+  "private": false,
+  "files": [
+    "__init__.py",
+    "install.py",
+    "requirements.txt",
+    "js",
+    "plugin",
+    "config",
+    "pyproject.toml",
+    ".comfyignore",
+    "scripts",
+    ".npmignore",
+    "README.md",
+    "CHANGELOG.md",
+    "package.json"
+  ],
+  "scripts": {
+    "verify": "node ./scripts/verify-package.mjs",
+    "prepack": "find . -type d -name '__pycache__' -prune -exec rm -rf {} + && find . -type f -name '*.pyc' -delete",
+    "copy:artifact": "node ./scripts/copy-artifact.mjs",
+    "pack:artifact": "npm pack",
+    "postpack": "npm run copy:artifact"
+  }
+}

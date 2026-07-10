@@ -1,0 +1,6 @@
+{
+  "asset_api_base_url": "http://127.0.0.1:8189",
+  "job_poll_seconds": 1.5,
+  "max_retries": 5,
+  "download_staging_path": "/srv/comfy/download-staging"
+}
