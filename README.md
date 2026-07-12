@@ -4,6 +4,16 @@ K0V0K Comfy Fetch is a ComfyUI custom-node plugin that adds a missing-model reso
 
 The goal is to support every Comfy model type that exposes downloadable hints to the user, not only common folders such as diffusion models, checkpoints, and LoRAs.
 
+## Why This Helps
+
+Comfy workflows can depend on several model files spread across different working folders. A documented workflow may tell you what to download and where each file belongs, but doing that manually still means monitoring large downloads, checking disk space, and moving every file into the correct ComfyUI model directory.
+
+![Workflow model dependency map](docs/downloads-map.png)
+
+K0V0K Comfy Fetch replaces that manual process with one button. When the workflow exposes download URLs, the plugin shows available model-storage disk space, lists the missing models it can resolve, downloads them in the background, places them in the correct ComfyUI folders, and refreshes missing-model errors when the job finishes.
+
+![Resolve Missing Models button](docs/the-button.png)
+
 ## Features
 
 - Adds a `Resolve Missing Models` panel to the top of the Workflow Overview errors experience.
@@ -163,6 +173,10 @@ k0v0k.comfy-fetch.job_update
 ## Error Handling
 
 The backend returns structured `error_details` objects with stable error codes. The UI maps those codes to user-facing text through `js/i18n.js`.
+
+When a provider blocks a download, the plugin surfaces the reason instead of leaving the user to diagnose a silent failed transfer. For example, Hugging Face gated models fail until the user accepts the model license or terms on Hugging Face and configures a token with access.
+
+![Hugging Face gated model error](docs/hf-error.png)
 
 Common error codes include:
 
