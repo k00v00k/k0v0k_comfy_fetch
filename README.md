@@ -273,6 +273,10 @@ npm run verify
 python -m py_compile install.py
 ```
 
+## Support
+
+If K0V0K Comfy Fetch saves you time or helps keep your ComfyUI workflows moving, tips are appreciated through [Ko-fi](https://ko-fi.com/k0v0k). Support helps fund continued plugin maintenance, compatibility updates, and documentation.
+
 ## License
 
 Apache License 2.0. See [LICENSE](LICENSE).
