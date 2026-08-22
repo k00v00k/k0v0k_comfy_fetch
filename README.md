@@ -1,6 +1,6 @@
 # K0V0K Comfy Fetch
 
-K0V0K Comfy Fetch is a ComfyUI custom-node plugin that adds a missing-model resolver panel to Workflow Overview. When a workflow or ComfyUI error entry exposes model download URLs, the plugin can send those URLs to a local fetch service, track progress, and refresh ComfyUI's missing-model state after downloads finish. We also support ranged file downloads where available, speeing up downloads more than 2x over merely downloading in the browser.
+K0V0K Comfy Fetch, published as Comfy-Fetch, is a ComfyUI custom-node plugin that adds a missing-model resolver panel to Workflow Overview. When a workflow or ComfyUI error entry exposes model download URLs, the plugin can send those URLs to a local fetch service, track progress, and refresh ComfyUI's missing-model state after downloads finish. We also support ranged file downloads where available, speeding up downloads more than 2x over merely downloading in the browser.
 
 The goal is to support every Comfy model type that exposes downloadable hints to the user, not only common folders such as diffusion models, checkpoints, and LoRAs.
 
@@ -43,17 +43,35 @@ This repository contains the ComfyUI plugin UI and route bridge. The actual mode
 
 ## Installation
 
+### ComfyUI-Manager
+
+Once published to the Comfy Registry, install Comfy-Fetch from ComfyUI-Manager by searching for:
+
+```text
+Comfy-Fetch
+```
+
+or:
+
+```text
+comfy-fetch
+```
+
+Restart ComfyUI after installation.
+
+### Manual Install
+
 Clone this repository directly into your ComfyUI `custom_nodes` directory:
 
 ```bash
 cd ComfyUI/custom_nodes
-git clone https://github.com/k00v00k/k0v0k_comfy_fetch.git
+git clone https://github.com/k00v00k/k0v0k_comfy_fetch.git comfy-fetch
 ```
 
 Install Python dependencies if your Comfy installer does not run `install.py` automatically:
 
 ```bash
-cd ComfyUI/custom_nodes/k0v0k_comfy_fetch
+cd ComfyUI/custom_nodes/comfy-fetch
 python install.py
 ```
 
@@ -70,6 +88,8 @@ ComfyUI/custom_nodes/k0v0k_comfy_fetch/
   plugin/
   pyproject.toml
 ```
+
+The folder may also be named `comfy-fetch`; ComfyUI only requires that it lives under `custom_nodes`.
 
 ## Configuration
 
@@ -95,6 +115,8 @@ export COMFY_ASSET_API_TOKEN="replace-with-token"
 ```
 
 Do not commit real tokens to this repository or to workflow files.
+
+Downloaded model files are not stored by this plugin. The plugin forwards workflow resolution requests to `comfy-asset-fetch-api`, which writes files into the configured ComfyUI model folders such as `models/diffusion_models`, `models/loras`, `models/text_encoders`, and related folders. Cache paths and download staging are controlled by the fetch service, not browser-local state.
 
 ## How It Works
 
@@ -169,6 +191,18 @@ The plugin listens for this ComfyUI event:
 ```text
 k0v0k.comfy-fetch.job_update
 ```
+
+## Node / Extension Registration
+
+Comfy-Fetch is a ComfyUI web extension and route bridge. It does not currently register image-processing node classes.
+
+Runtime registration is declared in `__init__.py`:
+
+```python
+WEB_DIRECTORY = "./js"
+```
+
+and through the async `comfy_entrypoint()` extension hook. Because there are no conventional node classes, this repository intentionally does not include a fake `node_list.json`.
 
 ## Error Handling
 
@@ -272,6 +306,45 @@ Before opening a pull request, run:
 npm run verify
 python -m py_compile install.py
 ```
+
+## Publishing
+
+Comfy Registry metadata is declared in `pyproject.toml`:
+
+- package id: `comfy-fetch`
+- display name: `Comfy-Fetch`
+- publisher id: `k0v0k`
+- repository: `https://github.com/k00v00k/k0v0k_comfy_fetch`
+
+The GitHub Actions workflow `.github/workflows/publish_action.yml` publishes to the Comfy Registry when `pyproject.toml` changes on `main` or when run manually.
+
+Before publishing, add this GitHub Actions repository secret:
+
+```text
+REGISTRY_ACCESS_TOKEN
+```
+
+Do not commit the token. See [docs/registry-publishing.md](docs/registry-publishing.md) for the manual publish flow and ComfyUI-Manager fallback PR instructions.
+
+## Uninstall
+
+Stop ComfyUI, remove the plugin directory, then restart ComfyUI:
+
+```bash
+cd ComfyUI/custom_nodes
+rm -rf comfy-fetch
+```
+
+If you installed the repository under another directory name, remove that directory instead.
+
+This does not remove downloaded model files. Remove model files manually from your ComfyUI model folders only if you are sure they are no longer needed.
+
+## Known Limitations
+
+- The plugin can only resolve models when ComfyUI or the workflow exposes a usable download URL.
+- Provider-gated downloads still require server-side credentials and any required license or terms acceptance.
+- It delegates actual downloads to `comfy-asset-fetch-api`; without that local service, the UI can analyze missing models but cannot fetch them.
+- It is designed for trusted local ComfyUI environments, not unrestricted public downloader access.
 
 ## Support
 
