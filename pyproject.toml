@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "comfy-fetch"
-version = "0.1.0"
+version = "0.7.48"
 description = "Fetch, cache, and manage remote assets and model artifacts for ComfyUI workflows."
 readme = "README.md"
 license = "Apache-2.0"
@@ -26,7 +26,7 @@ Documentation = "https://github.com/k00v00k/k0v0k_comfy_fetch#readme"
 "Bug Tracker" = "https://github.com/k00v00k/k0v0k_comfy_fetch/issues"
 
 [tool.comfy]
-PublisherId = "k0v0k"
+PublisherId = "k00v00k"
 DisplayName = "Comfy-Fetch"
 requires-comfyui = ">=1.0.0"
 
