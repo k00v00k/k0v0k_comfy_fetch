@@ -1,9 +1,18 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "k0v0k-comfy-fetch"
-version = "0.1.0"
-description = "Workflow Overview missing-model resolver for ComfyUI backed by the local comfy-asset-fetch service."
-license = { text = "Apache-2.0" }
+name = "comfy-fetch"
+version = "0.7.48"
+description = "Fetch, cache, and manage remote assets and model artifacts for ComfyUI workflows."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 requires-python = ">=3.10"
+authors = [
+  { name = "k0v0k" }
+]
 dependencies = [
   "aiohttp>=3.9"
 ]
@@ -17,6 +26,12 @@ Documentation = "https://github.com/k00v00k/k0v0k_comfy_fetch#readme"
 "Bug Tracker" = "https://github.com/k00v00k/k0v0k_comfy_fetch/issues"
 
 [tool.comfy]
-PublisherId = "k0v0k"
-DisplayName = "K0V0K Comfy Fetch"
+PublisherId = "k00v00k"
+DisplayName = "Comfy-Fetch"
 requires-comfyui = ">=1.0.0"
+
+[tool.setuptools]
+packages = [
+  "plugin",
+  "plugin.k0v0k_comfy_fetch"
+]
