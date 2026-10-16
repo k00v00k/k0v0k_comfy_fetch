@@ -7,7 +7,7 @@ Comfy-Fetch is prepared for the modern Comfy Registry publishing path.
 - Repository: `https://github.com/k00v00k/k0v0k_comfy_fetch`
 - Package id: `comfy-fetch`
 - Display name: `Comfy-Fetch`
-- Publisher id: `k0v0k`
+- Publisher id: `k00v00k`
 - Python support: `>=3.10`
 - License: Apache-2.0
 
@@ -30,7 +30,7 @@ The workflow at `.github/workflows/publish_action.yml` publishes when `pyproject
 Manual publish:
 
 1. Confirm `REGISTRY_ACCESS_TOKEN` exists in GitHub Actions secrets.
-2. Confirm the Comfy Registry publisher id `k0v0k` exists.
+2. Confirm the Comfy Registry publisher id `k00v00k` exists.
 3. Bump `version` in `pyproject.toml`.
 4. Merge the version bump to `main`, or run the workflow manually from GitHub Actions.
 
