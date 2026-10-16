@@ -7,7 +7,7 @@ Comfy-Fetch is prepared for the modern Comfy Registry publishing path.
 - Repository: `https://github.com/k00v00k/k0v0k_comfy_fetch`
 - Package id: `comfy-fetch`
 - Display name: `Comfy-Fetch`
-- Publisher id: `k0v0k`
+- Publisher id: `k00v00k`
 - Python support: `>=3.10`
 - License: Apache-2.0
 
