@@ -280,9 +280,9 @@ The package intentionally ignores generated artifacts such as `*.tgz`, `node_mod
 
 Comfy Manager and Registry metadata are declared in `pyproject.toml`:
 
-- node id: `k0v0k-comfy-fetch`
-- display name: `K0V0K Comfy Fetch`
-- publisher id: `k0v0k`
+- node id: `comfy-fetch`
+- display name: `Comfy-Fetch`
+- publisher id: `k00v00k`
 
 ## Security
 
