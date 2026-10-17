@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/comfy-fetch-icon.svg" alt="Comfy-Fetch icon" width="160"></p>
+
 # K0V0K Comfy Fetch
 
 K0V0K Comfy Fetch, published as Comfy-Fetch, is a ComfyUI custom-node plugin that adds a missing-model resolver panel to Workflow Overview. When a workflow or ComfyUI error entry exposes model download URLs, the plugin can send those URLs to a local fetch service, track progress, and refresh ComfyUI's missing-model state after downloads finish. We also support ranged file downloads where available, speeding up downloads more than 2x over merely downloading in the browser.
