@@ -2,7 +2,9 @@
 
 # K0V0K Comfy Fetch
 
-K0V0K Comfy Fetch, published as Comfy-Fetch, is a ComfyUI custom-node plugin that adds a missing-model resolver panel to Workflow Overview. When a workflow or ComfyUI error entry exposes model download URLs, the plugin can send those URLs to a local fetch service, track progress, and refresh ComfyUI's missing-model state after downloads finish. We also support ranged file downloads where available, speeding up downloads more than 2x over merely downloading in the browser.
+**Download the models your workflow needs, faster and without placing files by hand.**
+
+K0V0K Comfy Fetch, published as Comfy-Fetch, is a ComfyUI custom-node plugin that adds a missing-model resolver panel to Workflow Overview. When a workflow or ComfyUI error entry exposes model download URLs, the plugin sends those URLs to a local fetch service, tracks progress, and refreshes ComfyUI's missing-model state when the downloads finish. For files whose servers support HTTP range requests, the service can split a download into byte-range segments and fetch them in parallel. That can substantially reduce the wait for large models; the speedup depends on the source server and network.
 
 The goal is to support every Comfy model type that exposes downloadable hints to the user, not only common folders such as diffusion models, checkpoints, and LoRAs.
 
@@ -16,10 +18,17 @@ K0V0K Comfy Fetch replaces that manual process with one button. When the workflo
 
 ![Resolve Missing Models button](docs/the-button.png)
 
+### How Parallel Downloads Work
+
+If a model host supports HTTP range requests, the local fetch service can request different byte ranges of the same file at the same time. Those segments make up one completed model file, which the service places in the appropriate ComfyUI model folder. This is especially useful for large model files that would otherwise arrive through a single transfer.
+
+Parallel downloading requires range support from the source. Hosts without that support do not get this speedup, and actual download time still depends on the host, connection, file size, and available bandwidth. The transfer happens in `comfy-asset-fetch-api`; the ComfyUI plugin provides the workflow integration and progress UI.
+
 ## Features
 
 - Adds a `Resolve Missing Models` panel to the top of the Workflow Overview errors experience.
 - Resolves workflow-linked model assets across Comfy model families when download URLs are available.
+- Downloads supported model files in parallel HTTP range segments through the local fetch service.
 - Supports native Comfy model folders including checkpoints, LoRAs, text encoders, diffusion models, VAE families, background removal, detection, frame interpolation, geometry estimation, optical flow, and related model directories.
 - Shows per-model progress, numeric percentages, progress bars, observed transfer rate, and ETA.
 - Retries failed downloads up to five times per model.
@@ -125,7 +134,7 @@ Downloaded model files are not stored by this plugin. The plugin forwards workfl
 1. ComfyUI shows missing-model errors for the current workflow.
 2. The plugin serializes the current workflow and looks for download hints in workflow metadata and Markdown notes.
 3. The plugin submits the workflow to `comfy-asset-fetch-api`.
-4. The fetch service downloads assets into the correct model folders.
+4. Where the source supports HTTP ranges, the fetch service downloads segments of a model file in parallel; it places completed assets into the correct model folders.
 5. The plugin receives job updates through ComfyUI websocket events.
 6. When downloads complete, the plugin refreshes ComfyUI's missing-model view.
 
