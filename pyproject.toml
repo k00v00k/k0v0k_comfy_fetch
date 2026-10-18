@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "comfy-fetch"
-version = "0.7.49"
-description = "Fetch, cache, and manage remote assets and model artifacts for ComfyUI workflows."
+version = "0.7.50"
+description = "Download large ComfyUI models faster by fetching file pieces in parallel with HTTP range requests."
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]

@@ -66,7 +66,7 @@ Suggested legacy entry:
     "https://github.com/k00v00k/k0v0k_comfy_fetch"
   ],
   "install_type": "git",
-  "description": "Fetch, cache, and manage remote assets and model artifacts for ComfyUI workflows.",
+  "description": "Download large ComfyUI models faster by fetching file pieces in parallel with HTTP range requests.",
   "tags": [
     "asset",
     "fetch",

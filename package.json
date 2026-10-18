@@ -1,7 +1,7 @@
 {
   "name": "@k0v0k/comfy-fetch-comfyui",
-  "version": "0.7.48",
-  "description": "K0V0K Comfy Fetch for ComfyUI, backed by the autoforge comfy-asset-fetch service.",
+  "version": "0.7.50",
+  "description": "Download large ComfyUI models faster by fetching file pieces in parallel with HTTP range requests.",
   "type": "module",
   "private": false,
   "files": [
