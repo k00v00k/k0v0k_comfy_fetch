@@ -2,9 +2,9 @@
 
 # K0V0K Comfy Fetch
 
-**Download the models your workflow needs, faster and without placing files by hand.**
+**Download large ComfyUI models faster by fetching several pieces of each file at once.**
 
-K0V0K Comfy Fetch, published as Comfy-Fetch, is a ComfyUI custom-node plugin that adds a missing-model resolver panel to Workflow Overview. When a workflow or ComfyUI error entry exposes model download URLs, the plugin sends those URLs to a local fetch service, tracks progress, and refreshes ComfyUI's missing-model state when the downloads finish. For files whose servers support HTTP range requests, the service can split a download into byte-range segments and fetch them in parallel. That can substantially reduce the wait for large models; the speedup depends on the source server and network.
+K0V0K Comfy Fetch, published as Comfy-Fetch, is a ComfyUI custom-node plugin that adds a missing-model resolver panel to Workflow Overview. When a workflow or ComfyUI error entry exposes model download URLs, the plugin sends those URLs to a local fetch service, tracks progress, and refreshes ComfyUI's missing-model state when the downloads finish. When the source supports HTTP range requests, the service splits a large file into smaller pieces and downloads several pieces at the same time. Parallel transfers can make large model downloads significantly faster, though the speedup depends on the source server and network. The service then places the completed model in the correct ComfyUI folder.
 
 The goal is to support every Comfy model type that exposes downloadable hints to the user, not only common folders such as diffusion models, checkpoints, and LoRAs.
 
@@ -20,7 +20,7 @@ K0V0K Comfy Fetch replaces that manual process with one button. When the workflo
 
 ### How Parallel Downloads Work
 
-If a model host supports HTTP range requests, the local fetch service can request different byte ranges of the same file at the same time. Those segments make up one completed model file, which the service places in the appropriate ComfyUI model folder. This is especially useful for large model files that would otherwise arrive through a single transfer.
+If a model host supports HTTP range requests, the local fetch service asks for different pieces of the same file at the same time instead of waiting for one continuous download. It combines those pieces into the completed model file and places it in the appropriate ComfyUI model folder. Downloading several pieces in parallel can cut the wait for a large model.
 
 Parallel downloading requires range support from the source. Hosts without that support do not get this speedup, and actual download time still depends on the host, connection, file size, and available bandwidth. The transfer happens in `comfy-asset-fetch-api`; the ComfyUI plugin provides the workflow integration and progress UI.
 
